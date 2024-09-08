@@ -35,9 +35,15 @@ export function middleware(request: NextRequest) {
   const supportI18n = true
   let locale = userSelectLocale
   let isRedirect = false
+  console.log('middleware')
   // 如果是 public 文件，不重定向
-  if (/\.(.*)$/.test(pathname) && !/\.(.*)$/.exec(pathname)?.[1]?.includes('/'))
+  if (
+    /\.(.*)$/.test(pathname) &&
+    !/\.(.*)$/.exec(pathname)?.[1]?.includes('/')
+  ) {
+    console.log('如果是 public 文件，不重定向')
     return
+  }
   if (
     !/^(https?:\/\/)?(www\.)/.test(request.nextUrl.href) &&
     request.nextUrl.hostname !== 'localhost'

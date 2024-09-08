@@ -1,15 +1,18 @@
 import type {Metadata} from 'next'
 
 import '@/styles/globals.css'
-import '@rainbow-me/rainbowkit/styles.css'
 
-import {Lang} from '@/i18n/config'
 import {Nunito, Poppins, Space_Mono} from 'next/font/google'
 import Script from 'next/script'
 
-import 'github-markdown-css/github-markdown.css'
+import {Lang, locales} from '~/i18n/config'
 
-import WebAppProvider from '@/components/Provider/WebAppProvider'
+interface RootLayoutProps {
+  children: React.ReactNode
+  params: {
+    lang: Lang
+  }
+}
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -32,35 +35,20 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'HackQuest',
-  description: 'Learn and Grow Careers in Web3.',
-  robots: {
-    index: process.env.RUNTIME_ENV === 'production',
-    follow: process.env.RUNTIME_ENV === 'production',
-    googleBot: {
-      index: process.env.RUNTIME_ENV === 'production',
-      follow: process.env.RUNTIME_ENV === 'production'
-    }
-  },
+  title: 'Daisyz',
+  description: 'DEX platform',
   icons: {
     icon: [
       {
-        url: '/images/logo/logo.svg',
-        href: '/images/logo/logo.svg'
+        url: '/images/logo.svg',
+        href: '/images/logo.svg'
       }
     ]
   }
 }
 
-// export async function generateStaticParams() {
-//   return locales.map((lng) => ({ lng }));
-// }
-
-interface RootLayoutProps {
-  children: React.ReactNode
-  params: {
-    lang: Lang
-  }
+export async function generateStaticParams() {
+  return locales.map((lang) => ({ lang }))
 }
 
 export default function RootLayout({
@@ -74,11 +62,7 @@ export default function RootLayout({
       className={`${nunito.variable} ${space_mono.variable} ${poppins.variable}`}
     >
       <body className={`${nunito.className}`}>
-        <WebAppProvider lang={lang}>
-          <InitializeUserProvider lang={lang}>
-            {children}
-          </InitializeUserProvider>
-        </WebAppProvider>
+        {children}
 
         <Script id='theme-script'>
           {`const item = 'light';
