@@ -1,6 +1,7 @@
 {
     "swap": "Swap",
     "staking": "Staking",
+    "adminPanel": "Dashboard",
     "changeWallet": "Change wallet",
     "connecting": "Connecting ...",
     "copyAddress": "Copy address",

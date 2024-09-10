@@ -8,20 +8,28 @@ import {useTranslation} from '~/i18n/client'
 import {Lang} from '~/i18n/config'
 
 import {MenuLink, NavbarItem} from './type'
+import { useWallet } from '@solana/wallet-adapter-react'
+import { useEffect, useState } from 'react'
 
-const navList: NavbarItem[] = [
+const list: NavbarItem[] = [
   {
     label: 'swap',
-    path: '/swap' as MenuLink
+    path: MenuLink.SWAP
   },
   {
     label: 'staking',
-    path: '/staking' as MenuLink
+    path: MenuLink.STAKING
+  },
+  {
+    label: 'adminPanel',
+    path: MenuLink.ADMIN_PANEL
   }
 ]
 
 export const NavList = ({lang}: {lang: Lang}) => {
   console.log('lang3', lang)
+  const [navList, setNavList] = useState<NavbarItem[]>(list)
+  const { publicKey } = useWallet()
   const pathname = useCustomPathname()
   const {redirectToUrl} = useRedirect()
   const {t} = useTranslation(lang)
@@ -35,6 +43,14 @@ export const NavList = ({lang}: {lang: Lang}) => {
     redirectToUrl(path)
   }
 
+  useEffect(()=>{
+    if(publicKey){
+      setNavList(list)
+    }else {
+      setNavList(list.slice(0, 2))
+    }
+  },[publicKey])
+
   return (
     <>
       {navList.map((nav) => (
@@ -42,9 +58,10 @@ export const NavList = ({lang}: {lang: Lang}) => {
           key={nav.label}
           onClick={(e) => handleClickNav(e, nav)}
           className={cn(
-            ' cursor-pointer hover-underline group relative flex h-full items-center hover:bg-neutral-200 dark:hover:bg-neutral-800',
+            'hover-underline group relative flex h-full cursor-pointer items-center hover:bg-neutral-200 dark:hover:bg-neutral-800',
             {
-              'active font-bold bg-neutral-200 dark:bg-neutral-800': pathname === nav.path
+              'active bg-neutral-200 font-bold dark:bg-neutral-800':
+                pathname === nav.path
             }
           )}
         >
