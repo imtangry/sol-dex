@@ -3,6 +3,7 @@ import React, {ReactNode} from 'react'
 
 import {Lang} from '~/i18n/config'
 
+import ConnectWallet from './ConnectWallet'
 import LangSwitch from './LangSwitch'
 import {NavList} from './NavList'
 import ThemeSwitch from './ThemeSwitch'
@@ -33,13 +34,18 @@ const NavBar: React.FC<NavBarProps> = async ({children, lang}) => {
               <NavList lang={lang} />
             </div>
           </nav>
-          <div className='ml-auto flex w-8 items-center justify-center'>
-            <ThemeSwitch />
+          <div className='ml-auto space-x-2 flex items-center'>
+            <div className='ml-auto flex w-8 items-center justify-center'>
+              <ThemeSwitch />
+            </div>
+            <div className='flex w-8 items-center justify-center'>
+              <LangSwitch lang={lang} />
+            </div>
+            <div className='flex items-center justify-center'>
+              <ConnectWallet lang={lang} />
+            </div>
+            {children ? <div>{children}</div> : null}
           </div>
-          <div className='w-8 flex items-center justify-center'>
-            <LangSwitch lang={lang} />
-          </div>
-          <div>{children}</div>
         </div>
       </div>
     </div>
