@@ -1,4 +1,11 @@
 {
     "swap": "Swap",
-    "staking": "Staking"
+    "staking": "Staking",
+    "changeWallet": "Change wallet",
+    "connecting": "Connecting ...",
+    "copyAddress": "Copy address",
+    "copied": "Copied",
+    "disconnect": "Disconnect",
+    "hasWallet": "Connect",
+    "noWallet": "Select Wallet"
 }
