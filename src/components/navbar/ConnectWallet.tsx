@@ -6,7 +6,7 @@ import { useTranslation } from '~/i18n/client'
 
 import {Lang} from '~/i18n/config'
 
-export default function ConnectWallet({lang}: {lang: Lang}) {
+export default function ConnectWallet({lang, className}: {lang: Lang, className?: string}) {
   const {t} = useTranslation(lang)
   const LABELS = {
     'change-wallet': t('changeWallet'),
@@ -17,5 +17,5 @@ export default function ConnectWallet({lang}: {lang: Lang}) {
     'has-wallet': t('hasWallet'),
     'no-wallet': t('noWallet'),
   } as const
-  return <BaseWalletMultiButton labels={LABELS} />
+  return <BaseWalletMultiButton labels={LABELS} className={className} />
 }

@@ -1,18 +1,21 @@
 'use client'
 
 import {Button} from '@/components/ui/button'
-import Image from 'next/image'
 
 import './swap.css'
 
 import {cn} from '@/lib/utils'
+import {useWallet} from '@solana/wallet-adapter-react'
 import {ArrowUpDown} from 'lucide-react'
 import {useState} from 'react'
 
+import ConnectWallet from '../navbar/ConnectWallet'
 import {SwapCard} from './SwapCard'
 
 const cardHeight = 160
 export const Swap = () => {
+  const {publicKey} = useWallet()
+
   const [send, setSend] = useState({
     name: 'WETH',
     desc: 'Wrapped Ether (Portal from Ethereum)',
@@ -28,14 +31,13 @@ export const Swap = () => {
   })
 
   const reverse = () => {
-    console.log('reverse')
     const temp = {...send}
     setSend({...receive})
     setReceive({...temp})
   }
   return (
-    <div className='animate-in slide-in-from-bottom'>
-      <div className={cn('relative space-y-2')}>
+    <div className='page-swap animate-in slide-in-from-bottom space-y-4'>
+      <div className='relative space-y-2'>
         <SwapCard
           type='send'
           asset={send}
@@ -61,7 +63,11 @@ export const Swap = () => {
           <ArrowUpDown className='h-8 w-8' />
         </Button>
       </div>
-      <Button className='mt-4 h-14 w-full'>Swap</Button>
+      {publicKey ? (
+        <Button className='mt-4 h-14 w-full'>Swap</Button>
+      ) : (
+        <ConnectWallet lang='zh' className='w-full mt-4' />
+      )}
     </div>
   )
 }
