@@ -4,16 +4,16 @@ import {Button} from '@/components/ui/button'
 
 import './swap.css'
 
-import {cn} from '@/lib/utils'
 import {useWallet} from '@solana/wallet-adapter-react'
 import {ArrowUpDown} from 'lucide-react'
 import {useState} from 'react'
 
 import ConnectWallet from '../navbar/ConnectWallet'
 import {SwapCard} from './SwapCard'
+import {Lang} from "~/i18n/config";
 
 const cardHeight = 160
-export const Swap = () => {
+export const Swap = ({lang}:{lang:Lang}) => {
   const {publicKey} = useWallet()
 
   const [send, setSend] = useState({
@@ -66,7 +66,7 @@ export const Swap = () => {
       {publicKey ? (
         <Button className='mt-4 h-14 w-full'>Swap</Button>
       ) : (
-        <ConnectWallet lang='zh' className='w-full mt-4' />
+        <ConnectWallet lang={lang} className='w-full mt-4' />
       )}
     </div>
   )

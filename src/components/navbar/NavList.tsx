@@ -27,8 +27,8 @@ const list: NavbarItem[] = [
 ]
 
 export const NavList = ({lang}: {lang: Lang}) => {
-  console.log('lang3', lang)
-  const [navList, setNavList] = useState<NavbarItem[]>(list)
+  console.log('NavList lang', lang)
+  const [navList, setNavList] = useState<NavbarItem[]>([])
   const { publicKey } = useWallet()
   const pathname = useCustomPathname()
   const {redirectToUrl} = useRedirect()
@@ -49,7 +49,7 @@ export const NavList = ({lang}: {lang: Lang}) => {
     }else {
       setNavList(list.slice(0, 2).map( (item) => ({...item, label: t(item.label)})))
     }
-  },[publicKey])
+  },[publicKey, t])
 
   return (
     <>

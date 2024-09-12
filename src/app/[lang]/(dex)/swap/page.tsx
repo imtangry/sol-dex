@@ -14,8 +14,8 @@ const Landing: NextPage<LandingProps> = ({params: {lang}}) => {
 
   return (
     <div className='container mx-auto flex flex-col justify-center items-center p-8'>
-      <div className='w-[480px]'>
-        <Swap />
+      <div className='w-[480px] bg-neutral-100 dark:bg-neutral-600 rounded-xl p-3'>
+        <Swap lang={lang} />
       </div>
     </div>
   )

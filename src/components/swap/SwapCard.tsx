@@ -25,7 +25,7 @@ export const SwapCard = ({type, asset, setAsset, height}: SwapCardProps) => {
 
   return (
     <div
-      className='swap-card flex flex-col justify-between rounded-2xl bg-neutral-200 px-4 py-2 shadow-md dark:bg-[#262626]'
+      className='swap-card flex flex-col justify-between rounded-lg bg-neutral-200 px-4 py-2 shadow-md dark:bg-[#262626]'
       style={{
         maskImage:
           type === 'send'
