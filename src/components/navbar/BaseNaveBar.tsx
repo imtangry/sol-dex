@@ -16,12 +16,12 @@ export interface NavBarProps {
 const NavBar: React.FC<NavBarProps> = async ({children, lang}) => {
   console.log('lang2', lang)
   return (
-    <div className='relative z-[999] h-[64px] w-full'>
+    <div className='relative z-[1] h-[64px] w-full'>
       <div className='container mx-auto h-full'>
         <div className='flex h-full items-center justify-between'>
           <div className='h-12 cursor-pointer'>
             <Image
-              src='/images/logo.svg'
+              src='/images/logo-new.svg'
               height={0}
               width={0}
               sizes='100vw'

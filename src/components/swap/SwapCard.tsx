@@ -1,25 +1,25 @@
 'use client'
 
-import {Button} from '@/components/ui/button'
 import {useNumberInput} from '@/hooks/utils/useNumberInput'
-import Image from 'next/image'
 import { ToUsdcPrice } from './TokenToUsdc'
+import TokenListDialog from "@/components/swap/TokenListDialog";
 
 export type SwapAsset = {
   name: string
-  desc: string
-  icon: string
-  value: string
+  symbol: string
+  logoURI: string
+  value?: string
 }
 
 export type SwapCardProps = {
   type: 'send' | 'receive'
   asset: SwapAsset
   setAsset: (value: SwapAsset) => void
-  height: number
+  height: number,
+  tokens: SwapAsset[]
 }
 
-export const SwapCard = ({type, asset, setAsset, height}: SwapCardProps) => {
+export const SwapCard = ({type, asset, setAsset, height, tokens}: SwapCardProps) => {
   const cardHeight = height
   const handleChange = useNumberInput((value) => setAsset({...asset, value}))
 
@@ -37,20 +37,10 @@ export const SwapCard = ({type, asset, setAsset, height}: SwapCardProps) => {
       <div className='flex flex-nowrap overflow-hidden'>
         {/* 代币信息 */}
         <div className='flex flex-1 items-center'>
-          <Button
-            variant='outline'
-            size='icon'
-          >
-            <Image
-              width={32}
-              height={32}
-              src={asset.icon}
-              alt='icon'
-            />
-          </Button>
+          <TokenListDialog tokenList={tokens} token={asset}/>
           <div className='ml-2 flex flex-col justify-between overflow-hidden py-1'>
-            <span className='ellipsis font-bold'>{asset.name}</span>
-            <span className='ellipsis'>{asset.desc}</span>
+            <span className='ellipsis font-bold'>{asset.symbol}</span>
+            <span className='ellipsis'>{asset.name}</span>
           </div>
         </div>
         {/* 行情 */}
