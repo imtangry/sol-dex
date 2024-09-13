@@ -9,7 +9,7 @@ import {Lang} from '~/i18n/config'
 // const LABELS =  as const
 
 export default function ConnectWallet({lang, className}: {lang: Lang, className?: string}) {
-  console.log('ConnectWallet lang', lang)
+  const [ready, setReady] = useState<boolean>(false)
   const {t} = useTranslation(lang)
   const [label, setLabel] = useState({ 'change-wallet': t('changeWallet'),
     connecting: t('connecting'),
@@ -29,6 +29,9 @@ export default function ConnectWallet({lang, className}: {lang: Lang, className?
       'has-wallet': t('hasWallet'),
       'no-wallet': t('noWallet'),
     })
+    !ready && setReady(true)
   }, [t])
-  return <BaseWalletMultiButton labels={label} className={className} />
+  return (
+      ready? <BaseWalletMultiButton labels={label} className={className} /> : null
+  )
 }
