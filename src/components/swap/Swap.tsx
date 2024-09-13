@@ -30,7 +30,6 @@ export const Swap = ({lang}:{lang:Lang}) => {
 
   useEffect(() => {
     const getTokens = async ()=>{
-      // const res = await fetch("https://raw.githubusercontent.com/solana-labs/token-list/main/src/tokens/solana.tokenlist.json")
       const res = await fetch("https://tokens.jup.ag/tokens/tradable?tags=verified")
       const data = await res.json()
       tokens = data

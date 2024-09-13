@@ -7,10 +7,12 @@ import {
 } from '@/components/ui/dialog'
 import {Button} from "@/components/ui/button";
 import {SwapAsset} from "@/components/swap/SwapCard";
+import { useState } from 'react';
 
-export default function TokenListDialog({ token, tokenList}: { tokenList: SwapAsset[], token: SwapAsset  }) {
+export default function TokenListDialog({ token, tokenList, onChange}: { tokenList: SwapAsset[], token: SwapAsset, onChange: (value: SwapAsset) => void }) {
+    const [open, setOpen] = useState(false);
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button
                     variant='outline'
@@ -34,7 +36,8 @@ export default function TokenListDialog({ token, tokenList}: { tokenList: SwapAs
                             key={index}
                             className='w-full flex items-center rounded-lg bg-white dark:bg-gray-800 cursor-pointer dark:hover:bg-gray-600 p-2'
                             onClick={() => {
-                                console.log(item)
+                                onChange({...item, value: '0'})
+                                setOpen(false)
                             }}
                         >
                             <div className='min-w-11 min-h-11 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden'>

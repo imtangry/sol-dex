@@ -3,6 +3,7 @@
 import {useNumberInput} from '@/hooks/utils/useNumberInput'
 import { ToUsdcPrice } from './TokenToUsdc'
 import TokenListDialog from "@/components/swap/TokenListDialog";
+import { useEffect, useState } from 'react';
 
 export type SwapAsset = {
   name: string
@@ -10,6 +11,7 @@ export type SwapAsset = {
   logoURI: string
   value: string
   address: string
+  extensions:{coingeckoId:string}
 }
 
 export type SwapCardProps = {
@@ -22,7 +24,16 @@ export type SwapCardProps = {
 
 export const SwapCard = ({type, asset, setAsset, height, tokens}: SwapCardProps) => {
   const cardHeight = height
-  const handleChange = useNumberInput((value) => setAsset({...asset, value}))
+  const [loading, setLoading] = useState(true)
+  const [value, setValue] = useState(asset.value || 0)
+  const handleChange = useNumberInput((value) => {
+    setValue(value)
+    setAsset({...asset, value})
+  })
+
+  useEffect(() => {
+    if(asset.address) setLoading(false)
+  }, [asset])
 
   return (
     <div
@@ -38,14 +49,12 @@ export const SwapCard = ({type, asset, setAsset, height, tokens}: SwapCardProps)
       <div className='flex flex-nowrap overflow-hidden'>
         {/* 代币信息 */}
         <div className='flex flex-1 items-center'>
-          <TokenListDialog tokenList={tokens} token={asset}/>
+          <TokenListDialog tokenList={tokens} token={asset} onChange={setAsset} />
           <div className='ml-2 flex flex-col justify-between overflow-hidden py-1'>
             <span className='ellipsis font-bold'>{asset.symbol}</span>
             <span className='ellipsis'>{asset.name}</span>
           </div>
         </div>
-        {/* 行情 */}
-        <div className='min-w-28'></div>
       </div>
       {/* swap数量 */}
       <div className='relative'>
@@ -59,11 +68,13 @@ export const SwapCard = ({type, asset, setAsset, height, tokens}: SwapCardProps)
               className='transition ease-in-out mb-1 h-12 w-full border-primary px-4 text-right text-xl font-bold outline-none rounded-lg
               bg-transparent bg-gradient-to-l from-[#00000010] to-transparent hover:from-[#00000020] duration-800'
               onChange={handleChange}
-              value={asset.value}
+              value={value}
             />
           </div>
           <div className='absolute right-0 pr-4 -bottom-1 h-5 text-neutral-60 animate-in slide-in-from-bottom'>
-            <ToUsdcPrice address={asset.address} amount={parseFloat(asset.value)}/>
+            {asset.address ? (
+              <ToUsdcPrice ids={asset.address} amount={Number(value)} />
+            ) : null}
           </div>
         </div>
       </div>
