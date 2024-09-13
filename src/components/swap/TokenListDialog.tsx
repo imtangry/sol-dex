@@ -15,7 +15,7 @@ export default function TokenListDialog({ token, tokenList}: { tokenList: SwapAs
                 <Button
                     variant='outline'
                     size='rounded'
-                    className='w-12 h-12 hover:-translate-y-[2px] ease-in-out duration-400 rounder-full overflow-hidden'
+                    className='transition w-12 h-12 hover:-translate-y-[2px] ease-in-out duration-400 rounder-full overflow-hidden'
                 >
                     <img
                         className='w-full h-full'

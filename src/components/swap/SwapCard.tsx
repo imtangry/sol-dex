@@ -8,7 +8,8 @@ export type SwapAsset = {
   name: string
   symbol: string
   logoURI: string
-  value?: string
+  value: string
+  address: string
 }
 
 export type SwapCardProps = {
@@ -55,13 +56,14 @@ export const SwapCard = ({type, asset, setAsset, height, tokens}: SwapCardProps)
           <div className='ml-4 flex-1'>
             <input
               type='text'
-              className='mb-1 h-12 w-full border-primary px-4 text-right text-xl font-bold outline-none rounded-lg bg-transparent bg-gradient-to-l from-[#00000010] to-transparent'
+              className='transition ease-in-out mb-1 h-12 w-full border-primary px-4 text-right text-xl font-bold outline-none rounded-lg
+              bg-transparent bg-gradient-to-l from-[#00000010] to-transparent hover:from-[#00000020] duration-800'
               onChange={handleChange}
               value={asset.value}
             />
           </div>
           <div className='absolute right-0 pr-4 -bottom-1 h-5 text-neutral-60 animate-in slide-in-from-bottom'>
-            <ToUsdcPrice address='So11111111111111111111111111111111111111112' amount={parseFloat(asset.value)}/>
+            <ToUsdcPrice address={asset.address} amount={parseFloat(asset.value)}/>
           </div>
         </div>
       </div>

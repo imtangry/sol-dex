@@ -35,8 +35,8 @@ export const Swap = ({lang}:{lang:Lang}) => {
       const data = await res.json()
       tokens = data
       setTokenList(data)
-      setSend(data[0])
-      setReceive(data[1])
+      setSend({...data[0],value:0})
+      setReceive({...data[1],value:0})
     }
     if(tokens.length=== 0){
       getTokens()
@@ -69,11 +69,11 @@ export const Swap = ({lang}:{lang:Lang}) => {
           }}
           onClick={reverse}
         >
-          <ArrowUpDown className='h-8 w-8' />
+          <ArrowUpDown className='h-8 w-8 text-white' />
         </Button>
       </div>
       {publicKey ? (
-        <Button className='mt-4 h-14 w-full'>Swap</Button>
+        <Button className='mt-4 h-14 w-full bg-[#512da8] hover:bg-[#000] font-bold text-lg'>Swap</Button>
       ) : (
         <ConnectWallet lang={lang} className='w-full mt-4' />
       )}
