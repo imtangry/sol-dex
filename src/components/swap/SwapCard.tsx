@@ -9,8 +9,9 @@ export type SwapAsset = {
   name: string
   symbol: string
   logoURI: string
-  value: string
+  value: number
   address: string
+  decimals: number
   extensions:{coingeckoId:string}
 }
 
@@ -24,7 +25,6 @@ export type SwapCardProps = {
 
 export const SwapCard = ({type, asset, setAsset, height, tokens}: SwapCardProps) => {
   const cardHeight = height
-  const [loading, setLoading] = useState(true)
   const [value, setValue] = useState(asset.value || 0)
   const handleChange = useNumberInput((value) => {
     setValue(value)
@@ -32,8 +32,10 @@ export const SwapCard = ({type, asset, setAsset, height, tokens}: SwapCardProps)
   })
 
   useEffect(() => {
-    if(asset.address) setLoading(false)
-  }, [asset])
+    console.log('effect swap card', asset);
+    
+    setValue(asset.value)
+  }, [asset.value])
 
   return (
     <div
