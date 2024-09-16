@@ -33,12 +33,11 @@ export const Swap = ({lang}: {lang: Lang}) => {
 
   const quoteResponse = async () => {
     const res = await fetch(
-      `https://quote-api.jup.ag/v6/quote?inputMint=${send.address}&outputMint=${receive.address}&amount=${(10 ^ send.decimals * Number(send.value))}&slippageBps=50`
+      `https://quote-api.jup.ag/v6/quote?inputMint=${send.address}&outputMint=${receive.address}&amount=${((10 ** send.decimals) * Number(send.value))}&slippageBps=50`
     )
 
     const data = await res.json()
-    console.log('quoteResponse', data)
-    setReceive({...receive, value: Number(data.outputAmount)/(10^receive.decimals)})
+    setReceive({...receive, value: Number(data.outAmount)/(10**receive.decimals)})
   }
 
   useEffect(() => {
@@ -70,11 +69,11 @@ export const Swap = ({lang}: {lang: Lang}) => {
       <div className='relative space-y-2'>
         {loading ? (
           <>
-            <div className='space-y-2 rounded-lg bg-neutral-200 px-4 py-2'>
+            <div className='space-y-2 rounded-lg bg-neutral-200 dark:bg-neutral-700 px-4 py-2'>
               <Skeleton className='h-[70px] w-full' />
               <Skeleton className='h-[70px] w-full' />
             </div>
-            <div className='space-y-2 rounded-lg bg-neutral-200 px-4 py-2'>
+            <div className='space-y-2 rounded-lg bg-neutral-200 dark:bg-neutral-700 px-4 py-2'>
               <Skeleton className='h-[70px] w-full' />
               <Skeleton className='h-[70px] w-full' />
             </div>
@@ -109,7 +108,7 @@ export const Swap = ({lang}: {lang: Lang}) => {
         </Button>
       </div>
       {publicKey ? (
-        <Button className='mt-4 h-14 w-full bg-[#512da8] text-lg font-bold hover:bg-[#000]'>
+        <Button className='mt-4 h-14 w-full bg-[#512da8] text-lg font-bold hover:bg-[#000] text-white'>
           Swap
         </Button>
       ) : (
