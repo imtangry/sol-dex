@@ -72,7 +72,7 @@ export const Swap = ({lang}:{lang:Lang}) => {
         </Button>
       </div>
       {publicKey ? (
-        <Button className='mt-4 h-14 w-full bg-[#512da8] hover:bg-[#000] font-bold text-lg'>Swap</Button>
+        <Button className='mt-4 h-14 w-full bg-[#512da8] hover:bg-[#000] font-bold text-lg text-white'>Swap</Button>
       ) : (
         <ConnectWallet lang={lang} className='w-full mt-4' />
       )}

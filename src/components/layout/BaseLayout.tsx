@@ -16,7 +16,7 @@ const V2Layout: React.FC<BaseLayoutProps> = ({children, lang}) => {
       <div className='m-auto w-full flex-1 overflow-auto'>
         <div className={`flex h-full w-full flex-col`}>
           <div className='relative w-full flex-1'>
-            <main className='absolute left-0 top-0 h-full w-full'>
+            <main className='absolute left-0 top-0 h-full w-full bg-gradient-to-br dark:from-[#313d5c] dark:to-[#3d2a54]'>
               {children}
             </main>
           </div>

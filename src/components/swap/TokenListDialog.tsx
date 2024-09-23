@@ -30,7 +30,7 @@ export default function TokenListDialog({ token, tokenList, onChange}: { tokenLi
                 <DialogHeader>
                     <DialogTitle>选择 Token</DialogTitle>
                 </DialogHeader>
-                <div className='flex flex-col overflow-auto space-y-4 pb-2 pr-2'>
+                <div className='overflow-auto space-y-4 pb-2 pr-2'>
                     {tokenList.map((item, index) => (
                         <div
                             key={index}
@@ -51,8 +51,8 @@ export default function TokenListDialog({ token, tokenList, onChange}: { tokenLi
                                 <div className='font-bold text-lg'>{item.symbol}</div>
                                 <div className='text-gray-500 text-xs'>{item.name}</div>
                             </div>
-                            <div className='flex-1 ml-auto flex items-center text-gray-500 text-xs ellipsis pl-2'>
-                                {item.address}
+                            <div className='flex-1 min-w-0 ml-auto flex items-center text-gray-500 text-xs pl-2 overflow-hidden'>
+                                <span className='ml-auto ellipsis'>{item.address}</span>
                             </div>
                         </div>
                     ))}

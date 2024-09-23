@@ -16,8 +16,8 @@ export interface NavBarProps {
 const NavBar: React.FC<NavBarProps> = async ({children, lang}) => {
   console.log('lang2', lang)
   return (
-    <div className='relative z-[1] h-[64px] w-full'>
-      <div className='container mx-auto h-full'>
+    <div className='relative z-[1] h-[64px] w-full shadow-sm'>
+      <div className='w-full h-full px-6 dark:bg-neutral-900 dark:text-purple-100'>
         <div className='flex h-full items-center justify-between'>
           <div className='h-12 cursor-pointer'>
             <Image
