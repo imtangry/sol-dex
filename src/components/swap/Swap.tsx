@@ -18,6 +18,7 @@ const cardHeight = 160
 let tokens: SwapAsset[] = []
 export const Swap = ({lang}: {lang: Lang}) => {
   const {publicKey} = useWallet()
+  const slippageBps = 50
   const [loading, setLoading] = useState<boolean>(true)
   const [tokenList, setTokenList] = useState(tokens)
 
@@ -33,11 +34,14 @@ export const Swap = ({lang}: {lang: Lang}) => {
 
   const quoteResponse = async () => {
     const res = await fetch(
-      `https://quote-api.jup.ag/v6/quote?inputMint=${send.address}&outputMint=${receive.address}&amount=${((10 ** send.decimals) * Number(send.value))}&slippageBps=50`
+      `https://quote-api.jup.ag/v6/quote?inputMint=${send.address}&outputMint=${receive.address}&amount=${10 ** send.decimals * Number(send.value)}&slippageBps=${slippageBps}`
     )
 
     const data = await res.json()
-    setReceive({...receive, value: Number(data.outAmount)/(10**receive.decimals)})
+    setReceive({
+      ...receive,
+      value: Number(data.outAmount) / 10 ** receive.decimals
+    })
   }
 
   useEffect(() => {
@@ -58,9 +62,9 @@ export const Swap = ({lang}: {lang: Lang}) => {
   }, [])
 
   useEffect(() => {
-    if(send.value && send.value !== 0) {
+    if (send.value && send.value !== 0) {
       quoteResponse()
-    }else{
+    } else {
       setReceive({...receive, value: 0})
     }
   }, [send])
@@ -69,11 +73,11 @@ export const Swap = ({lang}: {lang: Lang}) => {
       <div className='relative space-y-2'>
         {loading ? (
           <>
-            <div className='space-y-2 rounded-lg bg-neutral-200 dark:bg-neutral-700 px-4 py-2'>
+            <div className='space-y-2 rounded-lg bg-neutral-200 px-4 py-2 dark:bg-neutral-700'>
               <Skeleton className='h-[70px] w-full' />
               <Skeleton className='h-[70px] w-full' />
             </div>
-            <div className='space-y-2 rounded-lg bg-neutral-200 dark:bg-neutral-700 px-4 py-2'>
+            <div className='space-y-2 rounded-lg bg-neutral-200 px-4 py-2 dark:bg-neutral-700'>
               <Skeleton className='h-[70px] w-full' />
               <Skeleton className='h-[70px] w-full' />
             </div>
@@ -108,7 +112,7 @@ export const Swap = ({lang}: {lang: Lang}) => {
         </Button>
       </div>
       {publicKey ? (
-        <Button className='mt-4 h-14 w-full bg-[#512da8] text-lg font-bold hover:bg-[#000] text-white'>
+        <Button className='mt-4 h-14 w-full bg-[#512da8] text-lg font-bold text-white hover:bg-[#000]'>
           Swap
         </Button>
       ) : (
@@ -117,6 +121,54 @@ export const Swap = ({lang}: {lang: Lang}) => {
           className='mt-4 w-full'
         />
       )}
+
+      <div className='mt-4 bg-neutral-200 px-4 py-2 dark:bg-neutral-800'>
+        {receive.value !== 0 ? (<div className='space-y-1'>
+          <div className='flex items-center justify-between text-xs'>
+            <div className='text-white-50'>Minimum Received</div>
+            <div className='text-white-50'>{receive.value * (1-(slippageBps/10000))}</div>
+          </div>
+          <div className='flex items-center justify-between text-xs'>
+            <div className='text-black-50 dark:text-white-50 flex w-[50%]'>
+              Max Transaction Fee
+              <div className=''>
+                <span className='ml-1 cursor-pointer'>[?]</span>
+              </div>
+              <div className='pointer-events-none fixed left-0 top-0 z-[-1] h-full w-full opacity-0 transition-all'></div>
+            </div>
+            <div className='text-black-50 dark:text-white-50'>0.004005 SOL</div>
+          </div>
+          <div className='flex items-start justify-between text-xs'>
+            <div className='text-black-50 dark:text-white-50 flex w-[50%]'>
+              Deposit
+              <div className=''>
+                <span className='ml-1 cursor-pointer'>[?]</span>
+              </div>
+              <div className='pointer-events-none fixed left-0 top-0 z-[-1] h-full w-full opacity-0 transition-all'></div>
+            </div>
+            <div className='text-black-50 dark:text-white-50 w-[50%] text-right text-xs'>
+              <p>0.00203928 SOL for 1 ATA account</p>
+            </div>
+          </div>
+          <div className='flex items-center justify-between text-xs'>
+            <div className='text-black-50 dark:text-white-50'>Price Impact</div>
+            <div className='text-white-50'>&lt; 0.1%</div>
+          </div>
+          <div className='flex items-start justify-between text-xs'>
+            <div className='text-white-50 justify-start'>Price Difference</div>
+            <div className='flex flex-col text-xs'>
+              <div className='flex w-full flex-row justify-end'>
+                <span className='!text-jupiter-jungle-green text-end'>
+                  &lt; 0.1% cheaper
+                </span>
+                <div className='!text-jupiter-jungle-green fill-current'></div>
+              </div>
+            </div>
+          </div>
+        </div>) : 
+        (<Skeleton className='h-[96px]' />) }
+        
+      </div>
     </div>
   )
 }

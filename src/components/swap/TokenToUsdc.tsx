@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react'
+import { Skeleton } from '../ui/skeleton';
 
 const ToUsdcPrice = ({ids, amount}: {ids: string; amount: number}) => {
   const [price, setPrice] = useState<number>(0)
@@ -31,7 +32,8 @@ const ToUsdcPrice = ({ids, amount}: {ids: string; amount: number}) => {
 
   if (loading) {
     return (
-      <span className='absolute bottom-0 right-0 top-0 w-20 animate-pulse rounded bg-gray-100'></span>
+      // <span className='animate-pulse rounded bg-gray-100'></span>
+      <Skeleton className='absolute bottom-0 right-0 top-0 w-20' />
     )
   }
 
