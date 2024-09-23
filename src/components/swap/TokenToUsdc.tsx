@@ -27,7 +27,7 @@ const ToUsdcPrice = ({ids, amount}: {ids: string; amount: number}) => {
   }
   useEffect(() => {
     fetchPrice()
-  }, [])
+  }, [ids])
 
   if (loading) {
     return (

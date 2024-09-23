@@ -1,4 +1,4 @@
-export function useNumberInput(callback: (e: string) => void) {
+export function useNumberInput(callback: (e: number) => void) {
   return (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value
 
@@ -6,7 +6,10 @@ export function useNumberInput(callback: (e: string) => void) {
     const regex = /^\d*\.?\d*$/
 
     if (regex.test(inputValue)) {
-      callback(inputValue)
+      const numericValue = parseFloat(inputValue)
+      if (!isNaN(numericValue)) {
+        callback(numericValue)
+      }
     }
   }
 }
